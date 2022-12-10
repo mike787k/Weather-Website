@@ -19,7 +19,7 @@ function App(){
   
   return (
     <div className='app'>
-      <div className='input'>
+      <div className='search-field'>
         <input
             value={location}
             onChange={event => setLocation(event.target.value)}
@@ -28,16 +28,17 @@ function App(){
             type="text" />
       </div>
 
-
-      <div className='container'>
-        <div classname='location'>
-          <p>{data.name}</p>
-        </div>
-        <div className='temprature'>
-          {data.main ? <p>{data.main.temp.toFixed()}°K</p> : null}
-        </div>
-        <div className='description'>
-          {data.weather ? <p>{data.weather[0].main}</p> : null}
+      <div className='data-container'>
+        <div className='top-screen'>
+          <div classname='location'>
+            <p>{data.name}</p>
+          </div>
+          <div className="temprature">
+            {data.main ? <h1>{data.main.temp.toFixed()}°K</h1> : null}
+          </div>
+          <div className="description">
+            {data.weather ? <p>{data.weather[0].main}</p> : null}
+          </div>
         </div>
       </div>
     </div>
