@@ -23,20 +23,21 @@ function App(){
         <input
             value={location}
             onChange={event => setLocation(event.target.value)}
+            onKeyPress={searchLocation}
             placeholder='Enter Location'
             type="text" />
       </div>
+
+
       <div className='container'>
         <div classname='location'>
-          <p>Current Location: </p>
-          <h1>{data.name}</h1>
+          <p>{data.name}</p>
         </div>
         <div className='temprature'>
-          <p>Current temprature: {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null} </p>
+          {data.main ? <p>{data.main.temp.toFixed()}°K</p> : null}
         </div>
         <div className='description'>
-          <p>Weather Description:</p>
-          <h1>{data.weather ? <p>{data.weather[0].main}</p> : null}</h1>
+          {data.weather ? <p>{data.weather[0].main}</p> : null}
         </div>
       </div>
     </div>
