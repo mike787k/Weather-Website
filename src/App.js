@@ -16,26 +16,18 @@ function App(){
       setLocation('')
     }
   }
-
-
-  
-  return (
-    <div className='app'>
-      <div className='search-field'>
-        <input
-            value={location}
-            onChange={event => setLocation(event.target.value)}
-            onKeyPress={searchLocation}
-            placeholder='Enter Location'
-            type="text" />
-      </div>
-
-      <div className='data-container'>
+  const createWeek = (event) => {
+    const days = [];
+    for(let i = 0; i < 7; i++)
+    {
+      const day = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${location}&cnt=${i}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
+      days.push(
+        <div className='data-container'>
         <div className='top-screen'>
           <div classname='location'>
             <p>{data.name}</p>
           </div>
-          <div className="temprature">
+          <div className="temperature">
             {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
           </div>
           <div className="description">
@@ -61,6 +53,57 @@ function App(){
             }
           </div>
         </div>
+      </div>
+      )
+    }
+  }
+
+  
+  return (
+    <div className='app'>
+      <div className='search-field'>
+        <input
+            value={location}
+            onChange={event => setLocation(event.target.value)}
+            onKeyPress={searchLocation}
+            placeholder='Enter Location'
+            type="text" />
+      </div>
+
+      <div className='data-container'>
+        <div className='top-screen'>
+          <div classname='location'>
+            <p>{data.name}</p>
+          </div>
+          <div className="temperature">
+            {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
+          </div>
+          <div className="description">
+            {data.main ?
+              <p style={{color:"red"}}>High Temp: {data.main.temp_max.toFixed()}°F  </p>
+              : null
+            }
+            {data.main ?
+              <p style={{color:"blue"}}>Low Temp:  {data.main.temp_min.toFixed()}°F </p>
+              : null
+            }
+            {data.weather ?  
+              <p>Weather currently:   {data.weather[0].main}</p> 
+              : null
+            }
+            {data.main ? 
+              <p>Currently Feels Like: {data.main.feels_like.toFixed()}°F</p> 
+              : null
+            }
+            {data.wind ?
+              <p>Wind Speed: {data.wind.speed.toFixed()} MPH</p> 
+              : null
+            }
+          </div>
+        </div>
+      </div>
+      <div className='week-container'>
+        
       </div>
     </div>
   );
