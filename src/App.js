@@ -3,10 +3,37 @@ import axios from 'axios'
 //import { response } from 'express'
 
 function App(){
-const [tmmr, setTmmr] = useState({})
+  const [tmmr, setTmmr] = useState({})
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
-  
+  // Get the user's default location
+  navigator.geolocation.getCurrentPosition(function(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  const API_KEY = '0649db80359931b5e91fd867a95060ba&units=imperial'
+  var url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for it's current location
+  const url_days_of_week = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for the next few days for it's current location
+  axios.get(url, {
+    params: {
+      lat: latitude,
+      lon: longitude,
+    }
+  }).then(function(response) {
+    setData(response.data);
+  }).catch(function(error) {
+  });
+  axios.get(url_days_of_week, {
+    params: {
+      lat: latitude,
+      lon: longitude,
+    }
+  }).then(function(response) {
+    setTmmr(response.data);
+  }).catch(function(error) {
+  });
+});
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
+  const url_days_of_week = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
       axios.get(url).then((response) => {
@@ -22,9 +49,6 @@ const [tmmr, setTmmr] = useState({})
       setLocation('')
     }
   }
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
-
-  const url_days_of_week = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
   const createWeek = (event) => {
     const days = [];
     for(let i = 0; i < 7; i++)
