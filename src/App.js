@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-
-
+//import { response } from 'express'
 
 function App(){
+const [tmmr, setTmmr] = useState({})
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
   
@@ -13,11 +13,18 @@ function App(){
         setData(response.data)
         console.log(response.data)
       })
+
+      axios.get(url_days_of_week).then((response) =>{
+        setTmmr(response.data)
+        console.log(response.data)
+      })
+
       setLocation('')
     }
   }
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
 
+  const url_days_of_week = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
   const createWeek = (event) => {
     const days = [];
     for(let i = 0; i < 7; i++)
@@ -104,8 +111,52 @@ function App(){
           </div>
         </div>
       </div>
+
       <div className='week-container'>
-        
+        <div className="week">
+          <div className="days">
+            <div>
+              {tmmr.list ?
+                <p>{(tmmr.list[0].dt_txt).substr(0,10)}</p>
+              : <p>No Data Provided</p>
+              }
+              {tmmr.list ?
+                <p>Average Temp: {tmmr.list[0].main.temp}</p>
+              : <p>No Data Provided</p>  
+            }
+              {tmmr. list ?
+                <p>Feels Like: {tmmr.list[0].main.feels_like}</p>
+              : <p>No Data Provided</p>
+              }
+            </div>
+            <div>
+            {tmmr.list ?
+                <p>{(tmmr.list[9].dt_txt).substr(0,10)}</p>
+              : <p>No Data Provided</p>
+              }
+              {tmmr.list ?
+                <p>Average Temp: {tmmr.list[9].main.temp}</p>
+              : <p>No Data Provided</p>  
+            }
+              {tmmr. list ?
+                <p>Feels Like: {tmmr.list[9].main.feels_like}</p>
+              : <p>No Data Provided</p>
+              }
+            </div>
+            <div>{tmmr.list ?
+                <p>{(tmmr.list[17].dt_txt).substr(0,10)}</p>
+              : <p>No Data Provided</p>
+              }
+              {tmmr.list ?
+                <p>Average Temp: {tmmr.list[17].main.temp}</p>
+              : <p>No Data Provided</p>  
+            }
+              {tmmr. list ?
+                <p>Feels Like: {tmmr.list[17].main.feels_like}</p>
+              : <p>No Data Provided</p>
+              }</div>
+          </div>
+        </div>
       </div>
     </div>
   );
