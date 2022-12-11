@@ -13,8 +13,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  margin: 0;
 }
-
+.data-container {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+  border-radius: 30px;
+  width: 100%;
+  margin: 1em;
+  position: absolute;
+}
 p {
   font-size: 1.6rem;
 }
