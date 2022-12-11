@@ -82,10 +82,7 @@ const [tmmr, setTmmr] = useState({})
       <div className='data-container'>
         <div className='top-screen'>
           <div classname='location'>
-            <p>{data.name}</p>
-          </div>
-          <div className="temperature">
-            {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
+            {data.main ? <h1>{data.name}: {data.main.temp.toFixed()}°F</h1> : null}
           </div>
           <div className="description">
             {data.main ?
@@ -115,8 +112,7 @@ const [tmmr, setTmmr] = useState({})
       <div className='week-container'>
         <div className="week">
           <div className="days">
-            <div>
-              {tmmr.list ?
+            <div>{tmmr.list ?
                 <p>{(tmmr.list[0].dt_txt).substr(0,10)}</p>
               : <p>No Data Provided</p>
               }
@@ -124,37 +120,63 @@ const [tmmr, setTmmr] = useState({})
                 <p>Average Temp: {tmmr.list[0].main.temp}</p>
               : <p>No Data Provided</p>  
             }
-              {tmmr. list ?
+              {tmmr.list ?
                 <p>Feels Like: {tmmr.list[0].main.feels_like}</p>
               : <p>No Data Provided</p>
               }
             </div>
-            <div>
-            {tmmr.list ?
-                <p>{(tmmr.list[9].dt_txt).substr(0,10)}</p>
+            <div>{tmmr.list ?
+                <p>{(tmmr.list[8].dt_txt).substr(0,10)}</p>
               : <p>No Data Provided</p>
               }
               {tmmr.list ?
-                <p>Average Temp: {tmmr.list[9].main.temp}</p>
+                <p>Average Temp: {tmmr.list[8].main.temp}</p>
               : <p>No Data Provided</p>  
             }
-              {tmmr. list ?
-                <p>Feels Like: {tmmr.list[9].main.feels_like}</p>
+              {tmmr.list ?
+                <p>Feels Like: {tmmr.list[8].main.feels_like}</p>
               : <p>No Data Provided</p>
               }
             </div>
             <div>{tmmr.list ?
-                <p>{(tmmr.list[17].dt_txt).substr(0,10)}</p>
+                <p>{(tmmr.list[16].dt_txt).substr(0,10)}</p>
+              : null
+              }
+              {tmmr.list ?
+                <p>Average Temp: {tmmr.list[16].main.temp}</p>
+              : null
+            }
+              {tmmr.list ?
+                <p>Feels Like: {tmmr.list[16].main.feels_like}</p>
+              : null
+              }
+            </div>
+            <div>{tmmr.list ?
+                <p>{(tmmr.list[24].dt_txt).substr(0,10)}</p>
               : <p>No Data Provided</p>
               }
               {tmmr.list ?
-                <p>Average Temp: {tmmr.list[17].main.temp}</p>
+                <p>Average Temp: {tmmr.list[24].main.temp}</p>
               : <p>No Data Provided</p>  
             }
-              {tmmr. list ?
-                <p>Feels Like: {tmmr.list[17].main.feels_like}</p>
+              {tmmr.list ?
+                <p>Feels Like: {tmmr.list[24].main.feels_like}</p>
               : <p>No Data Provided</p>
-              }</div>
+              }
+            </div>
+            <div>{tmmr.list ?
+                <p>{(tmmr.list[32].dt_txt).substr(0,10)}</p>
+              : <p>No Data Provided</p>
+              }
+              {tmmr.list ?
+                <p>Average Temp: {tmmr.list[32].main.temp}</p>
+              : <p>No Data Provided</p>  
+              }
+              {tmmr. list ?
+                <p>Feels Like: {tmmr.list[32].main.feels_like}</p>
+              : <p>No Data Provided</p>
+              }
+            </div>
           </div>
         </div>
       </div>
