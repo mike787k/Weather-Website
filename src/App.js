@@ -1,40 +1,55 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 //import { response } from 'express'
 
 function App(){
   const [tmmr, setTmmr] = useState({})
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
+  const [geolocationCalled, setGeolocationCalled] = useState(false);
+  function makeRequest(latitude, longitude) {
+  if (navigator.geolocation && !geolocationCalled) {
+      const API_KEY = 'dbb38b80ed68424ce8c6c21a721192c0&units=imperial'
+      const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for it's current location
+      const url_days_of_week = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for the next few days for it's current location
+      setGeolocationCalled(true);
+      axios.get(url, {
+        params: {
+          lat: latitude,
+          lon: longitude,
+        }
+      }).then(function(response) {
+        setData(response.data);
+      }).catch(function(error) {
 
-  navigator.geolocation.getCurrentPosition(function(position){
+      });
+      axios.get(url_days_of_week, {
+        params: {
+          lat: latitude,
+          lon: longitude,
+        }
+      }).then(function(response) {
+        setTmmr(response.data);
+      }).catch(function(error) {
+        // Handle any errors that occurred
+      });
+}
+}
+
+if (navigator.geolocation) {
+  console.log("test");
+  navigator.geolocation.getCurrentPosition(function(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    const API_KEY = 'dbb38b80ed68424ce8c6c21a721192c0&units=imperial'
-    const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for it's current location
-    const url_days_of_week = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for the next few days for it's current location
-    axios.get(url, {
-      params: {
-        lat: latitude,
-        lon: longitude,
-      }
-    }).then(function(response) {
-      setData(response.data);
-    }).catch(function(error) {
-    });
-    axios.get(url_days_of_week, {
-      params: {
-        lat: latitude,
-        lon: longitude,
-      }
-    }).then(function(response) {
-      setTmmr(response.data);
-      // Store the weather data in your application
-    }).catch(function(error) {
-      // Handle any errors that occurred
-    });
+
+    // debounce the makeRequest() function so that it is only called once every 1000 milliseconds
+    const debouncedMakeRequest = _.debounce(makeRequest, 1000);
+
+    // call the debounced function with the user's latitude and longitude
+    debouncedMakeRequest(latitude, longitude);
   });
-  
+}
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=6ccccb61744d6fcab3a44ba780830655&units=imperial`
   const url_days_of_week = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=6ccccb61744d6fcab3a44ba780830655&units=imperial`
   const searchLocation = (event) => {

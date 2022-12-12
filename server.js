@@ -9,7 +9,6 @@ app.get('/weather', (req, res) => {
   // Get the city and country from the query string
   const { city, country } = req.query
 
-  // Make a request to the OpenWeatherMap API
   request.get(
     `${API_ENDPOINT}?q=${city},${country}&appid=${API_KEY}`,
     (err, response, body) => {
@@ -20,9 +19,7 @@ app.get('/weather', (req, res) => {
           message: 'Error getting weather data from OpenWeatherMap API'
         })
       } else {
-        // Parse the response body
         const weatherData = JSON.parse(body)
-
         // Use the weather data to display the current weather
         res.send({
           success: true,
