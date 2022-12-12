@@ -200,7 +200,7 @@ function App(){
                 <p>Average Temp: {tmmr.list[32].main.temp}</p>
               : <p>No Data Provided</p>  
               }
-              {tmmr. list ?
+              {tmmr.list ?
                 <p>Feels Like: {tmmr.list[32].main.feels_like}</p>
               : <p>No Data Provided</p>
               }

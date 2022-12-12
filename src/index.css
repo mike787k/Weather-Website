@@ -72,10 +72,26 @@ h1 {
 }
 
 .week{
-  
+  margin: 20%;
+  position: relative;
+  padding: .7rem 1.5rem;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255,255,255, 0.8);
+  background: rgba(255,255,255, 0.1);
+  color: #f8f8f8;
 }
 
 .days{
+  column-count: 3;
+  column-gap: 40px;
+  column-rule: 1px solid rgba(255,255,255, 0.8);
   display: flex;
   justify-content: space-around;
+  /*border-collapse: collapse;
+  width: 65%;
+  border: 1px solider #dddddd;
+  text-align: left;
+  padding: 8px;*/
+  
 }
