@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 //import { response } from 'express'
@@ -8,12 +8,13 @@ function App(){
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
   const [geolocationCalled, setGeolocationCalled] = useState(false);
+  console.log("rerendered");
   function makeRequest(latitude, longitude) {
+    console.log(!geolocationCalled)
   if (navigator.geolocation && !geolocationCalled) {
       const API_KEY = 'dbb38b80ed68424ce8c6c21a721192c0&units=imperial'
       const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for it's current location
       const url_days_of_week = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for the next few days for it's current location
-      setGeolocationCalled(true);
       axios.get(url, {
         params: {
           lat: latitude,
@@ -35,6 +36,7 @@ function App(){
         // Handle any errors that occurred
       });
 }
+setGeolocationCalled(true);
 }
 
 if (navigator.geolocation) {
@@ -42,11 +44,7 @@ if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-
-    // debounce the makeRequest() function so that it is only called once every 1000 milliseconds
     const debouncedMakeRequest = _.debounce(makeRequest, 1000);
-
-    // call the debounced function with the user's latitude and longitude
     debouncedMakeRequest(latitude, longitude);
   });
 }
