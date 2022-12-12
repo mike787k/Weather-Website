@@ -25,7 +25,7 @@ body {
   border-radius: 30px;
   width: 100%;
   margin: 1em;
-  position: absolute;
+  position: fixed;
 }
 p {
   font-size: 1.6rem;
@@ -48,7 +48,7 @@ h1 {
 .app:before {
   background: url('./assets/sunset.jpeg') no-repeat center center/cover;
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
