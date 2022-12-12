@@ -54,9 +54,11 @@ h1 {
   z-index: -1;
 }
 
-.app .search-field {
+.search-field {
+  height: 10%;
   text-align: center;
   padding: 1rem;
+  z-index: 100;
 }
 
 .app input {
