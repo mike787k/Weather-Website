@@ -100,6 +100,7 @@ function App() {
       await fetch(`http://localhost:3001/data?location=${location}`)
         .then((response) => response.json())
         .then((data) => {
+          console.log(data)
           setData(data)
         })
 
@@ -149,9 +150,15 @@ function App() {
                 {data.name}: {data.main.temp.toFixed()}°F
               </h1>
             ) : null}
+            {data.main ? (
+              <p style={{ "font-weight" : "bold"}}>
+                High Temp: {data.main.temp_max.toFixed()}°F{' '}
+                Low Temp: {data.main.temp_min.toFixed()}°F{' '}
+              </p>
+            ) : null}
           </div>
           <div className="description">
-            {data.main ? (
+            {/* {data.main ? (
               <p style={{ "font-weight" : "bold"}}>
                 High Temp: {data.main.temp_max.toFixed()}°F{' '}
               </p>
@@ -160,7 +167,7 @@ function App() {
               <p style={{  "font-weight" : "bold" }}>
                 Low Temp: {data.main.temp_min.toFixed()}°F{' '}
               </p>
-            ) : null}
+            ) : null} */}
             {data.weather ? (
               <p style={{  "font-weight" : "bold" }} >Weather Currently: {data.weather[0].main}</p>
             ) : null}

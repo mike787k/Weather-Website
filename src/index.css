@@ -51,7 +51,7 @@ body {
 .rounded-container{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 
   padding: 0;
   border-radius: 25px;
@@ -69,12 +69,15 @@ body {
 }
 .location{
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
   margin-left: 0;
   margin-right: 0;
 }
 
 .description{
-  padding-bottom: 5%;
+  /* padding-bottom: 5%; */
 }
 .rounded-container-error{
   display: flex;
@@ -102,7 +105,7 @@ p {
 
 h1 {
   font-size: 6rem;
-  margin: 7%;
+  /* margin: 7%; */
 }
 
 .search-field {
