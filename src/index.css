@@ -124,3 +124,10 @@ h1 {
   padding: 30px; */ 
 }
 
+.days {
+  justify-content: space-around;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255, 0.8);
+  background: rgba(255,255,255, 0.1);
+  cursor: pointer;
+}
