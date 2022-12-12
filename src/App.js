@@ -3,10 +3,40 @@ import axios from 'axios'
 //import { response } from 'express'
 
 function App(){
-const [tmmr, setTmmr] = useState({})
+  const [tmmr, setTmmr] = useState({})
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
+  //   navigator.geolocation.getCurrentPosition(function(position) {
+  //     var latitude = position.coords.latitude;
+  //     var longitude = position.coords.longitude;
+  //     const API_KEY = 'dbb38b80ed68424ce8c6c21a721192c0&units=imperial'
+  //     const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for it's current location
+  //     const url_days_of_week = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for the next few days for it's current location
+  //     axios.get(url, {
+  //       params: {
+  //         lat: latitude,
+  //         lon: longitude,
+  //       }
+  //     }).then(function(response) {
+  //       setData(response.data);
+  //     }).catch(function(error) {
+  //     });
+  //     axios.get(url_days_of_week, {
+  //       params: {
+  //         lat: latitude,
+  //         lon: longitude,
+  //       }
+  //     }).then(function(response) {
+  //       setTmmr(response.data);
+  //       // Store the weather data in your application
+  //     }).catch(function(error) {
+  //       // Handle any errors that occurred
+  //     });
+  //   });
+  // }
   
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=6ccccb61744d6fcab3a44ba780830655&units=imperial`
+  const url_days_of_week = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=6ccccb61744d6fcab3a44ba780830655&units=imperial`
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
       axios.get(url).then((response) => {
@@ -22,9 +52,7 @@ const [tmmr, setTmmr] = useState({})
       setLocation('')
     }
   }
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
 
-  const url_days_of_week = `http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
   const createWeek = (event) => {
     const days = [];
     for(let i = 0; i < 7; i++)
@@ -114,11 +142,11 @@ const [tmmr, setTmmr] = useState({})
           <div className="days">
             <div>{tmmr.list ?
                 <p>{(tmmr.list[0].dt_txt).substr(0,10)}</p>
-              : <p>No Data Provided</p>
+              : null
               }
               {tmmr.list ?
                 <p>Average Temp: {tmmr.list[0].main.temp}</p>
-              : <p>No Data Provided</p>  
+              : null  
             }
               {tmmr.list ?
                 <p>Feels Like: {tmmr.list[0].main.feels_like}</p>
