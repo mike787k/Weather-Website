@@ -139,35 +139,33 @@ function App() {
       </div>
 
       <div className="data-container">
-        <div className="top-screen">
-          <div className="location">
-            {data.main ? (
-              <h1>
-                {data.name}: {data.main.temp.toFixed()}°F
-              </h1>
-            ) : null}
-          </div>
-          <div className="description">
-            {data.main ? (
-              <p style={{ color: 'red' }}>
-                High Temp: {data.main.temp_max.toFixed()}°F{' '}
-              </p>
-            ) : null}
-            {data.main ? (
-              <p style={{ color: 'blue' }}>
-                Low Temp: {data.main.temp_min.toFixed()}°F{' '}
-              </p>
-            ) : null}
-            {data.weather ? (
-              <p>Weather Currently: {data.weather[0].main}</p>
-            ) : null}
-            {data.main ? (
-              <p>Currently Feels Like: {data.main.feels_like.toFixed()}°F</p>
-            ) : null}
-            {data.wind ? (
-              <p>Wind Speed: {data.wind.speed.toFixed()} MPH</p>
-            ) : null}
-          </div>
+        <div className="location">
+          {data.main ? (
+            <h1>
+              {data.name}: {data.main.temp.toFixed()}°F
+            </h1>
+          ) : null}
+        </div>
+        <div className="description">
+          {data.main ? (
+            <p style={{ "font-weight" : "bold", color : "red"}}>
+              High Temp: {data.main.temp_max.toFixed()}°F{' '}
+            </p>
+          ) : null}
+          {data.main ? (
+            <p style={{  "font-weight" : "bold", color: 'blue', }}>
+              Low Temp: {data.main.temp_min.toFixed()}°F{' '}
+            </p>
+          ) : null}
+          {data.weather ? (
+            <p style={{  "font-weight" : "bold" }} >Weather Currently: {data.weather[0].main}</p>
+          ) : null}
+          {data.main ? (
+            <p style={{  "font-weight" : "bold" }} >Currently Feels Like: {data.main.feels_like.toFixed()}°F</p>
+          ) : null}
+          {data.wind ? (
+            <p style={{  "font-weight" : "bold" }} >Wind Speed: {data.wind.speed.toFixed()} MPH</p>
+          ) : null}
         </div>
       </div>
 
