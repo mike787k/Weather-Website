@@ -89,7 +89,7 @@ function App() {
   const createWeek = () => {
     const days = []
 
-    for (let i = 0; i <= 32; i += 8) {
+    for (let i = 7; i <= 39; i += 8) {
       days.push(
         <div className="days" key={`day${i}`}>
           {tmmr.list ? <p>{tmmr.list[i].dt_txt.substr(0, 10)}</p> : null}
@@ -114,36 +114,46 @@ function App() {
         />
       </div>
 
+      {data.name !== undefined ?
       <div className="data-container">
-        <div className="location">
-          {data.main ? (
-            <h1>
-              {data.name}: {data.main.temp.toFixed()}°F
-            </h1>
-          ) : null}
-        </div>
-        <div className="description">
-          {data.main ? (
-            <p style={{ "font-weight" : "bold", color : "red"}}>
-              High Temp: {data.main.temp_max.toFixed()}°F{' '}
-            </p>
-          ) : null}
-          {data.main ? (
-            <p style={{  "font-weight" : "bold", color: 'blue', }}>
-              Low Temp: {data.main.temp_min.toFixed()}°F{' '}
-            </p>
-          ) : null}
-          {data.weather ? (
-            <p style={{  "font-weight" : "bold" }} >Weather Currently: {data.weather[0].main}</p>
-          ) : null}
-          {data.main ? (
-            <p style={{  "font-weight" : "bold" }} >Currently Feels Like: {data.main.feels_like.toFixed()}°F</p>
-          ) : null}
-          {data.wind ? (
-            <p style={{  "font-weight" : "bold" }} >Wind Speed: {data.wind.speed.toFixed()} MPH</p>
-          ) : null}
+        <div className="rounded-container">
+          <div className="location">
+            {data.main ? (
+              <h1>
+                {data.name}: {data.main.temp.toFixed()}°F
+              </h1>
+            ) : null}
+          </div>
+          <div className="description">
+            {data.main ? (
+              <p style={{ "font-weight" : "bold"}}>
+                High Temp: {data.main.temp_max.toFixed()}°F{' '}
+              </p>
+            ) : null}
+            {data.main ? (
+              <p style={{  "font-weight" : "bold" }}>
+                Low Temp: {data.main.temp_min.toFixed()}°F{' '}
+              </p>
+            ) : null}
+            {data.weather ? (
+              <p style={{  "font-weight" : "bold" }} >Weather Currently: {data.weather[0].main}</p>
+            ) : null}
+            {data.main ? (
+              <p style={{  "font-weight" : "bold" }} >Currently Feels Like: {data.main.feels_like.toFixed()}°F</p>
+            ) : null}
+            {data.wind ? (
+              <p style={{  "font-weight" : "bold" }} >Wind Speed: {data.wind.speed.toFixed()} MPH</p>
+            ) : null}
+          </div>
         </div>
       </div>
+      : 
+      <div className='data-containeer'>
+        <div className='rounded-container-error'>
+            <p>Incorrect City Provided, Please Try Again</p>
+        </div>
+      </div>
+      }
 
       <div className="week-container">
         <div className="week">
@@ -151,6 +161,7 @@ function App() {
         </div>
       </div>
     </div>
+    
   )
 }
 
