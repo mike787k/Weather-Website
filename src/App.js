@@ -174,43 +174,43 @@ function App() {
           
             <div className="days">
               {tmmr.list ? <p>{tmmr.list[0].dt_txt.substr(0, 10)}</p> : null}
-              {tmmr.list ? <p>Average Temp: {tmmr.list[0].main.temp}</p> : null}
+              {tmmr.list ? <p>Average Temp: {tmmr.list[0].main.temp}°F</p> : null}
               {tmmr.list ? (
-                <p>Feels Like: {tmmr.list[0].main.feels_like}</p>
+                <p>Feels Like: {tmmr.list[0].main.feels_like}°F</p>
               ) : null}
             </div>
             <div className="days">
               {tmmr.list ? <p>{tmmr.list[8].dt_txt.substr(0, 10)}</p> : null}
-              {tmmr.list ? <p>Average Temp: {tmmr.list[8].main.temp}</p> : null}
+              {tmmr.list ? <p>Average Temp: {tmmr.list[8].main.temp}°F</p> : null}
               {tmmr.list ? (
-                <p>Feels Like: {tmmr.list[8].main.feels_like}</p>
+                <p>Feels Like: {tmmr.list[8].main.feels_like}°F</p>
               ) : null}
             </div>
             <div className="days">
               {tmmr.list ? <p>{tmmr.list[16].dt_txt.substr(0, 10)}</p> : null}
               {tmmr.list ? (
-                <p>Average Temp: {tmmr.list[16].main.temp}</p>
+                <p>Average Temp: {tmmr.list[16].main.temp}°F</p>
               ) : null}
               {tmmr.list ? (
-                <p>Feels Like: {tmmr.list[16].main.feels_like}</p>
+                <p>Feels Like: {tmmr.list[16].main.feels_like}°F</p>
               ) : null}
             </div>
             <div className="days">
               {tmmr.list ? <p>{tmmr.list[24].dt_txt.substr(0, 10)}</p> : null}
               {tmmr.list ? (
-                <p>Average Temp: {tmmr.list[24].main.temp}</p>
+                <p>Average Temp: {tmmr.list[24].main.temp}°F</p>
               ) : null}
               {tmmr.list ? (
-                <p>Feels Like: {tmmr.list[24].main.feels_like}</p>
+                <p>Feels Like: {tmmr.list[24].main.feels_like}°F</p>
               ) : null}
             </div>
             <div className="days">
               {tmmr.list ? <p>{tmmr.list[32].dt_txt.substr(0, 10)}</p> : null}
               {tmmr.list ? (
-                <p>Average Temp: {tmmr.list[32].main.temp}</p>
+                <p>Average Temp: {tmmr.list[32].main.temp}°F</p>
               ) : null}
               {tmmr.list ? (
-                <p>Feels Like: {tmmr.list[32].main.feels_like}</p>
+                <p>Feels Like: {tmmr.list[32].main.feels_like}°F</p>
               ) : null}
             </div>
           </div>
