@@ -4,6 +4,8 @@ import _ from 'lodash'
 //import { response } from 'express'
 
 function App() {
+  //random flip variable
+  let visited = false;
   const [tmmr, setTmmr] = useState({})
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
@@ -171,18 +173,25 @@ function App() {
           </div>
         </div>
       </div>
-      : 
-      <div className='data-containeer'>
-        <div className='rounded-container-error'>
-            <p>Incorrect City Provided, Please Try Again</p>
+      :
+        <div className='data-containeer'>
+          <div className='rounded-container-error'>
+              <p>Fetching Data</p>
+          </div>
         </div>
-      </div>
       }
 
+
+      {data.name !== undefined ?
       <div className="week-container">
         <div className="week">{createWeek()}</div>
       </div>
+      :
+      null
+      }
+
     </div>
+      
     
   )
 }
