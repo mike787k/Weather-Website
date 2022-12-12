@@ -1,20 +1,19 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 //import { response } from 'express'
 
-function App(){
+function App() {
   const [tmmr, setTmmr] = useState({})
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
   const [geolocationCalled, setGeolocationCalled] = useState(false);
-  console.log("rerendered");
   function makeRequest(latitude, longitude) {
-    console.log(!geolocationCalled)
   if (navigator.geolocation && !geolocationCalled) {
       const API_KEY = 'dbb38b80ed68424ce8c6c21a721192c0&units=imperial'
       const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for it's current location
       const url_days_of_week = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY; //Grabs the users weather for the next few days for it's current location
+      setGeolocationCalled(true);
       axios.get(url, {
         params: {
           lat: latitude,
@@ -36,7 +35,6 @@ function App(){
         // Handle any errors that occurred
       });
 }
-setGeolocationCalled(true);
 }
 
 if (navigator.geolocation) {
@@ -44,7 +42,11 @@ if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
+
+    // debounce the makeRequest() function so that it is only called once every 1000 milliseconds
     const debouncedMakeRequest = _.debounce(makeRequest, 1000);
+
+    // call the debounced function with the user's latitude and longitude
     debouncedMakeRequest(latitude, longitude);
   });
 }
@@ -57,7 +59,7 @@ if (navigator.geolocation) {
         console.log(response.data)
       })
 
-      axios.get(url_days_of_week).then((response) =>{
+      axios.get(url_days_of_week).then((response) => {
         setTmmr(response.data)
         console.log(response.data)
       })
@@ -67,162 +69,137 @@ if (navigator.geolocation) {
   }
 
   const createWeek = (event) => {
-    const days = [];
-    for(let i = 0; i < 7; i++)
-    {
+    const days = []
+    for (let i = 0; i < 7; i++) {
       const day = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${location}&cnt=${i}&appid=0649db80359931b5e91fd867a95060ba&units=imperial`
       days.push(
-        <div className='data-container'>
-        <div className='top-screen'>
-          <div classname='location'>
-            <p>{data.name}</p>
-          </div>
-          <div className="temperature">
-            {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
-          </div>
-          <div className="description">
-            {data.main ?
-              <p style={{color:"red"}}>High Temp: {data.main.temp_max.toFixed()}°F  </p>
-              : null
-            }
-            {data.main ?
-              <p style={{color:"blue"}}>Low Temp:  {data.main.temp_min.toFixed()}°F </p>
-              : null
-            }
-            {data.weather ?  
-              <p>Weather currently:   {data.weather[0].main}</p> 
-              : null
-            }
-            {data.main ? 
-              <p>Currently Feels Like: {data.main.feels_like.toFixed()}°F</p> 
-              : null
-            }
-            {data.wind ?
-              <p>Wind Speed: {data.wind.speed.toFixed()} MPH</p> 
-              : null
-            }
+        <div className="data-container">
+          <div className="top-screen">
+            <div classname="location">
+              <p>{data.name}</p>
+            </div>
+            <div className="temperature">
+              {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
+            </div>
+            <div className="description">
+              {data.main ? (
+                <p style={{ color: 'red' }}>
+                  High Temp: {data.main.temp_max.toFixed()}°F{' '}
+                </p>
+              ) : null}
+              {data.main ? (
+                <p style={{ color: 'blue' }}>
+                  Low Temp: {data.main.temp_min.toFixed()}°F{' '}
+                </p>
+              ) : null}
+              {data.weather ? (
+                <p>Weather Currently: {data.weather[0].main}</p>
+              ) : null}
+              {data.main ? (
+                <p>Currently Feels Like: {data.main.feels_like.toFixed()}°F</p>
+              ) : null}
+              {data.wind ? (
+                <p>Wind Speed: {data.wind.speed.toFixed()} MPH</p>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
       )
     }
   }
 
-  
   return (
-    <div className='app'>
-      <div className='search-field'>
+    <div className="app">
+      <div className="search-field">
         <input
-            value={location}
-            onChange={event => setLocation(event.target.value)}
-            onKeyPress={searchLocation}
-            placeholder='Enter Location'
-            type="text" />
+          value={location}
+          onChange={(event) => setLocation(event.target.value)}
+          onKeyPress={searchLocation}
+          placeholder="Enter Location"
+          type="text"
+        />
       </div>
 
-      <div className='data-container'>
-        <div className='top-screen'>
-          <div classname='location'>
-            {data.main ? <h1>{data.name}: {data.main.temp.toFixed()}°F</h1> : null}
+      <div className="data-container">
+        <div className="top-screen">
+          <div classname="location">
+            {data.main ? (
+              <h1>
+                {data.name}: {data.main.temp.toFixed()}°F
+              </h1>
+            ) : null}
           </div>
           <div className="description">
-            {data.main ?
-              <p style={{color:"red"}}>High Temp: {data.main.temp_max.toFixed()}°F  </p>
-              : null
-            }
-            {data.main ?
-              <p style={{color:"blue"}}>Low Temp:  {data.main.temp_min.toFixed()}°F </p>
-              : null
-            }
-            {data.weather ?  
-              <p>Weather currently:   {data.weather[0].main}</p> 
-              : null
-            }
-            {data.main ? 
-              <p>Currently Feels Like: {data.main.feels_like.toFixed()}°F</p> 
-              : null
-            }
-            {data.wind ?
-              <p>Wind Speed: {data.wind.speed.toFixed()} MPH</p> 
-              : null
-            }
+            {data.main ? (
+              <p style={{ color: 'red' }}>
+                High Temp: {data.main.temp_max.toFixed()}°F{' '}
+              </p>
+            ) : null}
+            {data.main ? (
+              <p style={{ color: 'blue' }}>
+                Low Temp: {data.main.temp_min.toFixed()}°F{' '}
+              </p>
+            ) : null}
+            {data.weather ? (
+              <p>Weather Currently: {data.weather[0].main}</p>
+            ) : null}
+            {data.main ? (
+              <p>Currently Feels Like: {data.main.feels_like.toFixed()}°F</p>
+            ) : null}
+            {data.wind ? (
+              <p>Wind Speed: {data.wind.speed.toFixed()} MPH</p>
+            ) : null}
           </div>
         </div>
       </div>
 
-      <div className='week-container'>
+      <div className="week-container">
         <div className="week">
           <div className="days">
-            <div>{tmmr.list ?
-                <p>{(tmmr.list[0].dt_txt).substr(0,10)}</p>
-              : null
-              }
-              {tmmr.list ?
-                <p>Average Temp: {tmmr.list[0].main.temp}</p>
-              : null  
-            }
-              {tmmr.list ?
-                <p>Feels Like: {tmmr.list[0].main.feels_like}</p>
-              : null
-              }
-            </div>
-            <div>{tmmr.list ?
-                <p>{(tmmr.list[8].dt_txt).substr(0,10)}</p>
-              : null
-              }
-              {tmmr.list ?
-                <p>Average Temp: {tmmr.list[8].main.temp}</p>
-              : null 
-            }
-              {tmmr.list ?
-                <p>Feels Like: {tmmr.list[8].main.feels_like}</p>
-              : null
-              }
-            </div>
-            <div>{tmmr.list ?
-                <p>{(tmmr.list[16].dt_txt).substr(0,10)}</p>
-              : null
-              }
-              {tmmr.list ?
-                <p>Average Temp: {tmmr.list[16].main.temp}</p>
-              : null
-            }
-              {tmmr.list ?
-                <p>Feels Like: {tmmr.list[16].main.feels_like}</p>
-              : null
-              }
-            </div>
-            <div>{tmmr.list ?
-                <p>{(tmmr.list[24].dt_txt).substr(0,10)}</p>
-              : null
-              }
-              {tmmr.list ?
-                <p>Average Temp: {tmmr.list[24].main.temp}</p>
-              : null  
-            }
-              {tmmr.list ?
-                <p>Feels Like: {tmmr.list[24].main.feels_like}</p>
-              : null
-              }
-            </div>
-            <div>{tmmr.list ?
-                <p>{(tmmr.list[32].dt_txt).substr(0,10)}</p>
-              : null
-              }
-              {tmmr.list ?
-                <p>Average Temp: {tmmr.list[32].main.temp}</p>
-              : null  
-              }
-              {tmmr.list ?
-                <p>Feels Like: {tmmr.list[32].main.feels_like}</p>
-              : null
-              }
-            </div>
+            {tmmr.list ? <p>{tmmr.list[0].dt_txt.substr(0, 10)}</p> : null}
+            {tmmr.list ? <p>Average Temp: {tmmr.list[0].main.temp}°F</p> : null}
+            {tmmr.list ? (
+              <p>Feels Like: {tmmr.list[0].main.feels_like}°F</p>
+            ) : null}
+          </div>
+          <div className="days">
+            {tmmr.list ? <p>{tmmr.list[8].dt_txt.substr(0, 10)}</p> : null}
+            {tmmr.list ? <p>Average Temp: {tmmr.list[8].main.temp}°F</p> : null}
+            {tmmr.list ? (
+              <p>Feels Like: {tmmr.list[8].main.feels_like}°F</p>
+            ) : null}
+          </div>
+          <div className="days">
+            {tmmr.list ? <p>{tmmr.list[16].dt_txt.substr(0, 10)}</p> : null}
+            {tmmr.list ? (
+              <p>Average Temp: {tmmr.list[16].main.temp}°F</p>
+            ) : null}
+            {tmmr.list ? (
+              <p>Feels Like: {tmmr.list[16].main.feels_like}°F</p>
+            ) : null}
+          </div>
+          <div className="days">
+            {tmmr.list ? <p>{tmmr.list[24].dt_txt.substr(0, 10)}</p> : null}
+            {tmmr.list ? (
+              <p>Average Temp: {tmmr.list[24].main.temp}°F</p>
+            ) : null}
+            {tmmr.list ? (
+              <p>Feels Like: {tmmr.list[24].main.feels_like}°F</p>
+            ) : null}
+          </div>
+          <div className="days">
+            {tmmr.list ? <p>{tmmr.list[32].dt_txt.substr(0, 10)}</p> : null}
+            {tmmr.list ? (
+              <p>Average Temp: {tmmr.list[32].main.temp}°F</p>
+            ) : null}
+            {tmmr.list ? (
+              <p>Feels Like: {tmmr.list[32].main.feels_like}°F</p>
+            ) : null}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
- 
-export default App;
+
+export default App
