@@ -78,7 +78,7 @@ h1 {
 
 .week{
   margin: 20%;
-  position: absolute;
+  position: fixed;
   font-size: 1.2rem;
   color: #f8f8f8;
 
