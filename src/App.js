@@ -8,6 +8,32 @@ function App() {
   const [data, setData] = useState({})
   const [location, setLocation] = useState('')
   const [geolocationCalled, setGeolocationCalled] = useState(false)
+  let cache = ''
+  let dayCache = ''
+  const api = axios.create({
+    baseURL: 'http://localhost:3001',
+  })
+  // make a request to the server to retrieve the cache data
+  api
+    .get('/cache')
+    .then((response) => {
+      // the response data will be a JSON object containing the cache data
+      cache = response.data
+      console.log(cache)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  api
+    .get('/dayCache')
+    .then((response) => {
+      // the response data will be a JSON object containing the cache data
+      dayCache = response.data
+      console.log(dayCache)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   function makeRequest(latitude, longitude) {
     if (navigator.geolocation && !geolocationCalled) {
       const API_KEY = 'dbb38b80ed68424ce8c6c21a721192c0&units=imperial'
@@ -70,22 +96,20 @@ function App() {
   const searchLocation = async (event) => {
     if (event.key === 'Enter') {
       await fetch(`http://localhost:3001/data?location=${location}`)
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-      });
-    
-    await fetch(`http://localhost:3001/days?location=${location}`)
-      .then(response => response.json())
-      .then(data => {
-        setTmmr(data);
-      });
-    
-      setLocation('');
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data)
+        })
+
+      await fetch(`http://localhost:3001/days?location=${location}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setTmmr(data)
+        })
+
+      setLocation('')
     }
   }
-
-
   const createWeek = () => {
     const days = []
 
@@ -100,7 +124,7 @@ function App() {
         </div>
       )
     }
-    return days;
+    return days
   }
   return (
     <div className="app">
@@ -148,9 +172,7 @@ function App() {
       </div>
 
       <div className="week-container">
-        <div className="week">
-          {createWeek()}
-        </div>
+        <div className="week">{createWeek()}</div>
       </div>
     </div>
   )
