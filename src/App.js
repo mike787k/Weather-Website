@@ -38,7 +38,7 @@ function App() {
     })
   function makeRequest(latitude, longitude) {
     if (navigator.geolocation && !geolocationCalled) {
-      const API_KEY = 'dbb38b80ed68424ce8c6c21a721192c0&units=imperial'
+      const API_KEY = 'API KEYS'
       const url =
         'https://api.openweathermap.org/data/2.5/weather?lat=' +
         latitude +
